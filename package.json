@@ -1,0 +1,19 @@
+{
+  "name": "giznode",
+  "version": "0.0.1",
+  "description": "gizmo server made with node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/crsayen/giznode.git"
+  },
+  "author": "chris sayen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crsayen/giznode/issues"
+  },
+  "homepage": "https://github.com/crsayen/giznode#readme"
+}
