@@ -1,0 +1,7 @@
+{
+    "production": {
+        "http":{
+            "port": 36364
+        }
+    }
+}
