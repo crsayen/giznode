@@ -32,6 +32,7 @@ function dopatch(req,res){
     } 
 }
 
+// mock controller for playing
 let controller = {
     getFirmwareVersion : () => {
         console.log('666!!!')
