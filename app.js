@@ -10,41 +10,46 @@ const settings = ( args.length ) ? config[args[0]] : config.production
 let resolve = buildresolver(schema)
 
 function doget(req,res){
+    if (req.originalUrl == '/schema'){
+        res.status(200).json(schema)
+    }
     let props = resolve(req.originalUrl)
     if (props && props.r) {
-        res.status(200).json(controller[props.r]()) 
+        res.status(200).json({ path: req.originalUrl, data: controller[props.r]()}) 
     } else {
-        res.status(400).send('Bad Request')
+        res.json({error: 'Bad request'})
     } 
 }
 
 function dopatch(req,res){
-    let props = resolve(req.body.path)
-    if (props && props.w) {
-        res.status(200).json(
-            {
-                path: req.body.path, 
-                data:controller[props.w](...props.args, req.body.value)
-            }
-        ) 
-    } else {
-        res.status(400).send('Bad Request')
-    } 
+    let rs = (req.body.path) ? [req.body] : req.body
+    let responses = []
+    for (r of rs){
+        let props = resolve(r.path)
+        if (props && props.w) {
+            responses.push(
+                {
+                    path: r.path, 
+                    data:controller[props.w](...props.args, r.value)
+                }
+            ) 
+        } else {
+            res.json({error:'Bad Request'})
+        }
+    }
+    res.json(responses)
+     
 }
 
 // mock controller for playing
 let controller = {
     getFirmwareVersion : () => {
-        console.log('666!!!')
-        return { path: req.originalUrl, data: '6.6.6' }
+        return '6.6.6'
     },
-    setRelay : (index, state) => {
-        console.log(state)
-        return {relay: index, state: state} 
-    }
+    setRelay : (index, state) => state
 }
 
-
+app.use(express.static('dist'))
 app.use(express.json())
 app.get('/*', doget)
 app.patch('/*', dopatch)

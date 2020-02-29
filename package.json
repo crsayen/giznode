@@ -18,7 +18,8 @@
   "homepage": "https://github.com/crsayen/giznode#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "hashmap": "^2.4.0"
+    "hashmap": "^2.4.0",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
